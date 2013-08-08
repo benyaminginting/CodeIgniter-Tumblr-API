@@ -1,0 +1,130 @@
+Using the Library
+
+Using the library is relatively straight-forward with most actions only taking a few lines of code. I will provide more in-depth documentation very soon but for now let’s take a look at a few examples. The Tumblr API documentation may also help a little.
+
+Reading Posts
+
+The tumblr.php config file in the ‘application/config’ directory:
+view plaincopy to clipboardprint?
+
+    // URL of tumblr blog.  
+    // Replace to be the URL of the blog you want to read posts from  
+    $config['tumblr_blog_url'] = 'http://[YOU].tumblr.com';  
+
+The tumblr.php library file in the ‘application/libraries’ directory:
+view plaincopy to clipboardprint?
+
+    // Load the library  
+    $this->load->library('tumblr');  
+      
+    // Obtain an array of posts from the specified blog  
+    // See the config file for a list of settings available  
+    $posts = $this->tumblr->read_posts();  
+      
+    // Output the posts  
+    print_r($posts);  
+
+Example output:
+view plaincopy to clipboardprint?
+
+    Array  
+    (  
+       [0] => Array  
+       (  
+          [title] => This is a sample post title  
+          [body] => <p>And this is the body</p>  
+          [id] => 6010787147  
+          [url] => http://[YOU].tumblr.com/post/6010787147  
+          [url-with-slug] => http://[YOU].tumblr.com/post/6010787147/post-1  
+          [type] => regular  
+          [date-gmt] => 2011-05-30 20:41:17 GMT  
+          [date] => Mon, 30 May 2011 16:41:17  
+          [unix-timestamp] => 1306788077  
+          [format] => html  
+          [reblog-key] => Wfd5YDHP  
+          [slug] => post-1  
+       )  
+       [1] => Array  
+       (  
+          [title] => And another post  
+          [body] => <p>More lovely post content</p>  
+          [id] => 6011797127  
+          [url] => http://[YOU].tumblr.com/post/6011797127  
+          [url-with-slug] => http://[YOU].tumblr.com/post/6011797127/post-2  
+          [type] => regular  
+          [date-gmt] => 2011-05-29 20:43:17 GMT  
+          [date] => Sun, 29 May 2011 16:43:17  
+          [unix-timestamp] => 1306788077  
+          [format] => html  
+          [reblog-key] => Wfd4XDVP  
+          [slug] => post-2  
+       )  
+    )  
+
+Adding New Posts
+
+The tumblr.php config file in the ‘application/config’ directory:
+view plaincopy to clipboardprint?
+
+    // Email address and Password used to log in to Tumblr.  
+    $config['tumblr_email'] = '[YOUR-EMAIL]';  
+    $config['tumblr_password'] = '[YOUR-PASSWORD]';  
+
+The tumblr.php library file in the ‘application/libraries’ directory:
+view plaincopy to clipboardprint?
+
+    // Load the library  
+    $this->load->library('tumblr');  
+      
+    // Add the post  
+    $post_data = array();  
+    $post_data['type'] = 'regular';  
+    $post_data['title'] = 'This is a post created through the API';  
+    $post_data['body'] = 'And this is the body';  
+    $post_id = $this->tumblr->write_post($post_data);  
+      
+    // Output the newly created post ID  
+    echo $post_id;  
+
+Editing Existing Posts
+
+The tumblr.php config file in the ‘application/config’ directory:
+view plaincopy to clipboardprint?
+
+    // Email address and Password used to log in to Tumblr.  
+    $config['tumblr_email'] = '[YOUR-EMAIL]';  
+    $config['tumblr_password'] = '[YOUR-PASSWORD]';  
+
+The tumblr.php library file in the ‘application/libraries’ directory:
+view plaincopy to clipboardprint?
+
+    // Load the library  
+    $this->load->library('tumblr');  
+      
+    // Add the post  
+    $post_data = array();  
+    $post_data['post-id'] = '6010787147'; // The ID of the post that we want to edit  
+    $post_data['type'] = 'regular';  
+    $post_data['title'] = 'This is an editing post updated through the API';  
+    $post_data['body'] = 'And even an updated body';  
+    $this->tumblr->write_post($post_data);  
+
+Deleting Posts
+
+The tumblr.php config file in the ‘application/config’ directory:
+view plaincopy to clipboardprint?
+
+    // Email address and Password used to log in to Tumblr.  
+    $config['tumblr_email'] = '[YOUR-EMAIL]';  
+    $config['tumblr_password'] = '[YOUR-PASSWORD]';  
+
+The tumblr.php library file in the ‘application/libraries’ directory:
+view plaincopy to clipboardprint?
+
+    // Load the library  
+    $this->load->library('tumblr');  
+      
+    // Delete the post  
+    $this->tumblr->delete_post('6010787147');  
+
+I will be adding more examples and documentation very soon so be sure to check back. Alternatively please leave a comment if you have any questions or feedback about the library.
